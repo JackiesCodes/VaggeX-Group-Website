@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-orange-primary: #FF8C42;
+  --color-orange-dark: #E6731A;
+  --color-orange-light: #FFB366;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF8C42;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E6731A;
+}
+
+/* Form focus ring */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #FF8C42;
+  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
+}
+
+/* Video object fit */
+video {
+  object-fit: cover;
+}
+
+/* Parallax backgrounds */
+.parallax-bg {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+}
+
+/* Service card checkmark */
+.service-list li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.service-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #FF8C42;
+  font-weight: bold;
+}
+
+/* Values list */
+.values-list li {
+  border-bottom: 1px solid #D1D5DB;
+  padding: 0.5rem 0;
+}
+.values-list li:last-child {
+  border-bottom: none;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
