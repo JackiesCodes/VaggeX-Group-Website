@@ -5,7 +5,7 @@ const services = [
   {
     id: "civil-infrastructure",
     image: "/civil-infrastructure.jpg",
-    icon: <Construction size={24} />,
+    icon: <Construction size={24} aria-hidden="true" />,
     number: "1.",
     title: "Civil & Infrastructure Construction",
     description:
@@ -19,7 +19,7 @@ const services = [
   {
     id: "building-construction",
     image: "/building-construction.jpg",
-    icon: <Building2 size={24} />,
+    icon: <Building2 size={24} aria-hidden="true" />,
     number: "2.",
     title: "Building Construction",
     description:
@@ -33,7 +33,7 @@ const services = [
   {
     id: "rehabilitation-maintenance",
     image: "/rehab-maintenance.jpg",
-    icon: <Settings size={24} />,
+    icon: <Settings size={24} aria-hidden="true" />,
     number: "3.",
     title: "Rehabilitation & Maintenance",
     description:
@@ -47,7 +47,7 @@ const services = [
   {
     id: "project-management",
     image: "/project-management.jpg",
-    icon: <ClipboardCheck size={24} />,
+    icon: <ClipboardCheck size={24} aria-hidden="true" />,
     number: "4.",
     title: "Project Management & Consultancy",
     description:
@@ -67,13 +67,8 @@ export default function Services() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Wrench size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Wrench size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
@@ -93,9 +88,9 @@ export default function Services() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service) => (
-            <div
+            <article
               key={service.id}
-              className="bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className="bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-within:ring-2 focus-within:ring-[#FF8C42] focus-within:ring-offset-2"
             >
               {/* Image */}
               <div className="relative h-48">
@@ -110,13 +105,7 @@ export default function Services() {
 
               {/* Content */}
               <div className="p-6">
-                <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-                  }}
-                >
+                <div className="brand-gradient w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
@@ -132,7 +121,7 @@ export default function Services() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

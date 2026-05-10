@@ -7,13 +7,8 @@ export default function About() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Building size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Building size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">

@@ -8,19 +8,14 @@ export default function VisionMission() {
       style={{ backgroundImage: "url('/vision-background.jpg')" }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/70" />
+      <div aria-hidden="true" className="absolute inset-0 bg-white/70" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-5">
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Target size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Target size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
@@ -33,16 +28,9 @@ export default function VisionMission() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           {/* Vision */}
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div
-              className="w-15 h-15 rounded-full flex items-center justify-center text-white mx-auto mb-6"
-              style={{
-                width: "60px",
-                height: "60px",
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Eye size={28} />
+          <article className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="brand-gradient w-[60px] h-[60px] rounded-full flex items-center justify-center text-white mx-auto mb-6">
+              <Eye size={28} aria-hidden="true" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Vision</h3>
             <p className="text-gray-600 leading-relaxed">
@@ -53,19 +41,12 @@ export default function VisionMission() {
               , transforming communities through sustainable, high-quality
               infrastructure and building solutions.
             </p>
-          </div>
+          </article>
 
           {/* Mission */}
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div
-              className="rounded-full flex items-center justify-center text-white mx-auto mb-6"
-              style={{
-                width: "60px",
-                height: "60px",
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Compass size={28} />
+          <article className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="brand-gradient w-[60px] h-[60px] rounded-full flex items-center justify-center text-white mx-auto mb-6">
+              <Compass size={28} aria-hidden="true" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Mission</h3>
             <p className="text-gray-600 leading-relaxed">
@@ -76,20 +57,13 @@ export default function VisionMission() {
               that meet international standards, empower citizens, and align with
               Botswana&apos;s national development agenda.
             </p>
-          </div>
+          </article>
 
           {/* Values — spans full width */}
-          <div className="md:col-span-2 bg-white rounded-xl shadow-lg p-8">
+          <article className="md:col-span-2 bg-white rounded-xl shadow-lg p-8">
             <div className="flex flex-col items-center mb-6">
-              <div
-                className="rounded-full flex items-center justify-center text-white mb-4"
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-                }}
-              >
-                <Heart size={28} />
+              <div className="brand-gradient w-[60px] h-[60px] rounded-full flex items-center justify-center text-white mb-4">
+                <Heart size={28} aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Our Values</h3>
             </div>
@@ -107,7 +81,7 @@ export default function VisionMission() {
                 </li>
               ))}
             </ul>
-          </div>
+          </article>
         </div>
       </div>
     </section>

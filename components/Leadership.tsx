@@ -25,13 +25,8 @@ export default function Leadership() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Users size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Users size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
@@ -44,7 +39,7 @@ export default function Leadership() {
         {/* Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {leaders.map((leader) => (
-            <div
+            <article
               key={leader.name}
               className="bg-white rounded-xl shadow-lg p-8 flex flex-col sm:flex-row gap-6 items-center sm:items-start"
             >
@@ -63,12 +58,12 @@ export default function Leadership() {
                 <h3 className="text-2xl font-bold text-gray-800 mb-1">
                   {leader.name}
                 </h3>
-                <p className="font-semibold mb-4" style={{ color: "#FF8C42" }}>
+                <p className="font-semibold text-[#FF8C42] mb-4">
                   {leader.title}
                 </p>
                 <p className="text-gray-600 leading-relaxed">{leader.bio}</p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

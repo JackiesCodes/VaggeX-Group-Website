@@ -1,22 +1,21 @@
 "use client";
 
 import { Mail, Phone } from "lucide-react";
+import { scrollToSection } from "@/lib/scroll";
 
 export default function Hero() {
-  const scrollToContact = () => {
-    const el = document.querySelector("#contact");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Video */}
+      {/* Background Video — poster shows while video loads */}
       <div className="absolute inset-0 -z-20 overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/capabilities-background.jpg"
+          aria-hidden="true"
           className="w-full h-full object-cover"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
@@ -25,6 +24,7 @@ export default function Hero() {
 
       {/* Overlay */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 -z-10"
         style={{
           background:
@@ -47,25 +47,21 @@ export default function Hero() {
 
           {/* Contact Info Box */}
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
-            <h3 className="font-semibold text-lg mb-4">Contact Information</h3>
+            <p className="font-semibold text-lg mb-4">Contact Information</p>
             <p className="flex items-center gap-2 mb-3 text-sm">
-              <Mail size={16} className="shrink-0" />
+              <Mail size={16} aria-hidden="true" className="shrink-0" />
               vaggexgroup@gmail.com
             </p>
             <p className="flex items-center gap-2 text-sm">
-              <Phone size={16} className="shrink-0" />
+              <Phone size={16} aria-hidden="true" className="shrink-0" />
               +267 76 449 256 / 77814198
             </p>
           </div>
 
           <button
-            onClick={scrollToContact}
-            className="inline-block px-8 py-4 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-            style={{
-              background:
-                "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              boxShadow: "0 4px 15px rgba(255,140,66,0.4)",
-            }}
+            onClick={() => scrollToSection("#contact")}
+            className="brand-gradient inline-block px-8 py-4 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            style={{ boxShadow: "0 4px 15px rgba(255,140,66,0.4)" }}
           >
             Get In Touch
           </button>
@@ -76,10 +72,10 @@ export default function Hero() {
           {[
             { value: "30+", label: "Years Combined Experience" },
             { value: "100+", label: "Projects Completed" },
-            { value: "5★", label: "Client Satisfaction" },
+            { value: "5/5", label: "Client Satisfaction" },
           ].map((stat) => (
             <div key={stat.label} className="text-center text-white">
-              <h3 className="text-4xl font-extrabold mb-2">{stat.value}</h3>
+              <p className="text-4xl font-extrabold mb-2">{stat.value}</p>
               <p className="text-sm opacity-80">{stat.label}</p>
             </div>
           ))}

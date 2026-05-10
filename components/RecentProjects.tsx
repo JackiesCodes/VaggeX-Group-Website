@@ -53,13 +53,8 @@ export default function RecentProjects() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Award size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Award size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
@@ -72,9 +67,9 @@ export default function RecentProjects() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {projects.map((project) => (
-            <div
+            <article
               key={project.id}
-              className="relative rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1"
+              className="relative rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-within:ring-2 focus-within:ring-[#FF8C42] focus-within:ring-offset-2"
             >
               <div className="relative h-60">
                 <Image
@@ -87,18 +82,18 @@ export default function RecentProjects() {
               </div>
               {/* Overlay */}
               <div
+                aria-hidden="true"
                 className="absolute bottom-0 left-0 right-0 p-5 text-white"
-                style={{
-                  background:
-                    "linear-gradient(transparent, rgba(0,0,0,0.8))",
-                }}
-              >
-                <h4 className="text-lg font-semibold mb-1">{project.title}</h4>
+                style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}
+              />
+              {/* Text — outside overlay div so it's accessible */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <h3 className="text-lg font-semibold mb-1">{project.title}</h3>
                 <p className="text-sm opacity-90">
                   {project.company} · {project.period}
                 </p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

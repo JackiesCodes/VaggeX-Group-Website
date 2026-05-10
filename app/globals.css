@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-  --color-orange-primary: #FF8C42;
-  --color-orange-dark: #E6731A;
-  --color-orange-light: #FFB366;
-}
-
 * {
   scroll-behavior: smooth;
 }
@@ -36,9 +30,21 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
 }
 
+/* Keyboard focus indicator for all interactive elements */
+*:focus-visible {
+  outline: 2px solid #FF8C42;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Video object fit */
 video {
   object-fit: cover;
+}
+
+/* Brand gradient — single source of truth for the orange gradient */
+.brand-gradient {
+  background: linear-gradient(135deg, #FF8C42 0%, #E6731A 100%);
 }
 
 /* Parallax backgrounds */

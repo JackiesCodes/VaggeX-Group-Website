@@ -26,19 +26,14 @@ export default function Capabilities() {
       style={{ backgroundImage: "url('/capabilities-background.jpg')" }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/70" />
+      <div aria-hidden="true" className="absolute inset-0 bg-white/70" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-5">
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-white"
-              style={{
-                background: "linear-gradient(135deg, #FF8C42 0%, #E6731A 100%)",
-              }}
-            >
-              <Zap size={32} />
+            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
+              <Zap size={32} aria-hidden="true" />
             </div>
           </div>
           <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
@@ -62,10 +57,10 @@ export default function Capabilities() {
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {capabilities.map((cap) => (
-            <div key={cap.title} className="bg-white rounded-xl shadow-lg p-6">
+            <article key={cap.title} className="bg-white rounded-xl shadow-lg p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-4">{cap.title}</h3>
               <p className="text-gray-600 leading-relaxed">{cap.description}</p>
-            </div>
+            </article>
           ))}
         </div>
 
