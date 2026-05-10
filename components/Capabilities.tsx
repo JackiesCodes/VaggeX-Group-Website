@@ -1,4 +1,6 @@
 import { Zap } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 const capabilities = [
   {
@@ -22,59 +24,61 @@ export default function Capabilities() {
   return (
     <section
       id="capabilities"
-      className="py-12 relative parallax-bg"
+      className="py-20 relative parallax-bg"
       style={{ backgroundImage: "url('/capabilities-background.jpg')" }}
     >
-      {/* Overlay */}
-      <div aria-hidden="true" className="absolute inset-0 bg-white/70" />
+      <div aria-hidden="true" className="absolute inset-0 bg-white/75" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-5">
         {/* Header */}
-        <div className="text-center mb-10">
+        <FadeIn className="text-center mb-14">
           <div className="flex justify-center mb-6">
             <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
               <Zap size={32} aria-hidden="true" />
             </div>
           </div>
-          <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
-            OUR
-            <br />
-            CAPABILITIES
+          <p className="text-[#FF8C42] font-semibold tracking-widest uppercase text-sm mb-3">
+            Our Strength
+          </p>
+          <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
+            Our{" "}
+            <span className="bg-gradient-to-r from-[#FF8C42] to-[#E6731A] bg-clip-text text-transparent">
+              Capabilities
+            </span>
           </h2>
-        </div>
-
-        <p className="text-center text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto mb-10">
-          Although Vaggex Group is a new entity, our{" "}
-          <strong className="text-gray-800">
-            capability lies in the strength of our leadership team
-          </strong>
-          . Collectively, our directors bring over{" "}
-          <strong className="text-gray-800">30 years of industry experience</strong>,
-          spanning large-scale water transfer projects, educational institutions,
-          public facilities, rehabilitation works, and infrastructure upgrades.
-        </p>
+          <p className="text-gray-600 text-lg mt-4 max-w-3xl mx-auto leading-relaxed">
+            Our directors bring over{" "}
+            <strong className="text-gray-800">30 years of combined industry experience</strong>{" "}
+            spanning large-scale water transfer projects, educational institutions,
+            public facilities, rehabilitation works, and infrastructure upgrades.
+          </p>
+        </FadeIn>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {capabilities.map((cap) => (
-            <article key={cap.title} className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">{cap.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{cap.description}</p>
-            </article>
+            <StaggerItem key={cap.title}>
+              <article className="bg-white rounded-2xl shadow-lg p-6 h-full border-t-4 border-[#FF8C42]">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">{cap.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">{cap.description}</p>
+              </article>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {/* Summary */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-          <p className="text-lg text-gray-600 leading-relaxed">
-            This blend of field-tested technical know-how and business leadership
-            uniquely positions Vaggex Group as a{" "}
-            <strong className="text-gray-800">
-              competent, reliable, and growth-oriented construction partner
-            </strong>
-            .
-          </p>
-        </div>
+        <FadeIn delay={0.2}>
+          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+            <p className="text-lg text-gray-600 leading-relaxed">
+              This blend of field-tested technical know-how and business leadership
+              uniquely positions Vaggex Group as a{" "}
+              <strong className="text-gray-800">
+                competent, reliable, and growth-oriented construction partner
+              </strong>
+              .
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
