@@ -1,27 +1,33 @@
 import Image from "next/image";
-import { Award } from "lucide-react";
+import { Info } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 import FadeIn from "@/components/FadeIn";
 import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
+// These projects were worked on by our directors while employed by the
+// contractors listed — they are personal experience, not Vaggex Group contracts.
 const projects = [
   {
     id: "lobatse-wastewater",
     image: "/lobatse-goodhope.jpg",
     title: "Lobatse & Goodhope Wastewater Infrastructure",
+    sector: "Wastewater",
     company: "Agnoat Construction",
     period: "2024–2025",
   },
   {
     id: "palapye-water",
     image: "/palapye-mmamashia.jpg",
-    title: "Palapye-Mmamashia Water Transfer Project",
+    title: "Palapye–Mmamashia Water Transfer Project",
+    sector: "Water transfer",
     company: "China Harbour Engineering",
     period: "2023–2024",
   },
   {
     id: "selebi-water",
     image: "/selebi-phikwe-serule.jpg",
-    title: "Selebi Phikwe-Serule Water Transfer Scheme",
+    title: "Selebi Phikwe–Serule Water Transfer Scheme",
+    sector: "Water transfer",
     company: "Sharps Construction",
     period: "2021–2023",
   },
@@ -29,6 +35,7 @@ const projects = [
     id: "mogonono-pump",
     image: "/mogonono-pump.jpg",
     title: "Mogonono Booster Pump Station",
+    sector: "Pump station",
     company: "Bulongo Projects",
     period: "2019–2021",
   },
@@ -36,6 +43,7 @@ const projects = [
     id: "kagiso-school",
     image: "/kagiso-school.jpg",
     title: "Kagiso Senior Secondary School",
+    sector: "Education building",
     company: "China State Construction",
     period: "1999–2006",
   },
@@ -43,67 +51,100 @@ const projects = [
     id: "high-court",
     image: "/high-court-lobatse-new.jpg",
     title: "High Court Lobatse",
+    sector: "Public building",
     company: "Euro Construction",
     period: "1991–1993",
   },
 ];
 
 export default function RecentProjects() {
+  const [featured, ...rest] = projects;
+
   return (
-    <section id="gallery" className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-5">
-        {/* Header */}
-        <FadeIn className="text-center mb-14">
-          <div className="flex justify-center mb-6">
-            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
-              <Award size={32} aria-hidden="true" />
-            </div>
-          </div>
-          <p className="text-[#FF8C42] font-semibold tracking-widest uppercase text-sm mb-3">
-            Track Record
-          </p>
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
-            Directors&apos;{" "}
-            <span className="bg-gradient-to-r from-[#FF8C42] to-[#E6731A] bg-clip-text text-transparent">
-              Project Portfolio
+    <section id="gallery" className="bg-ink py-24 text-white lg:py-32">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <SectionHeading
+          tone="dark"
+          index="03"
+          eyebrow="Directors' Track Record"
+          title={
+            <>
+              Experience
+              <br />
+              <span className="text-brand">in the field</span>
+            </>
+          }
+          intro={
+            <p>
+              Major projects our founding directors have worked on across Botswana
+              over three decades, while employed by the contractors named below.
+            </p>
+          }
+        />
+
+        <FadeIn className="mt-10">
+          <p className="flex items-start gap-3 border-l-2 border-brand bg-white/5 px-5 py-4 text-sm text-white/70">
+            <Info size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+            <span>
+              Transparency note: these are the personal experience of our directors,
+              not contracts awarded to Vaggex Group. Each card names the company
+              our director was working with at the time.
             </span>
-          </h2>
-          <p className="text-gray-500 text-lg mt-4 max-w-2xl mx-auto">
-            Major projects delivered by our founding directors — a track record
-            that speaks for itself.
           </p>
         </FadeIn>
 
-        {/* Grid */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+        {/* Featured + grid */}
+        <StaggerContainer className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerItem className="md:col-span-2 lg:row-span-2">
+            <ProjectCard project={featured} large />
+          </StaggerItem>
+          {rest.map((project) => (
             <StaggerItem key={project.id}>
-              <article className="relative rounded-2xl overflow-hidden shadow-lg focus-within:ring-2 focus-within:ring-[#FF8C42] focus-within:ring-offset-2 h-60 group">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                {/* Gradient overlay */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)" }}
-                />
-                {/* Text */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <h3 className="text-base font-bold mb-1 leading-snug">{project.title}</h3>
-                  <p className="text-xs opacity-80">
-                    {project.company} · {project.period}
-                  </p>
-                </div>
-              </article>
+              <ProjectCard project={project} />
             </StaggerItem>
           ))}
         </StaggerContainer>
       </div>
     </section>
+  );
+}
+
+function ProjectCard({
+  project,
+  large = false,
+}: {
+  project: (typeof projects)[number];
+  large?: boolean;
+}) {
+  return (
+    <article
+      className={`group relative h-full overflow-hidden bg-ink-800 ${
+        large ? "min-h-[420px] lg:min-h-full" : "min-h-[280px]"
+      }`}
+    >
+      <Image
+        src={project.image}
+        alt={project.title}
+        fill
+        className="object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-90"
+        sizes={large ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"
+      />
+      <span className="absolute left-0 top-0 bg-brand px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-ink">
+        {project.period}
+      </span>
+      <div className="absolute inset-x-0 bottom-0 p-6">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand">
+          {project.sector}
+        </p>
+        <h3 className={`display text-white ${large ? "text-4xl lg:text-6xl" : "text-2xl"}`}>
+          {project.title}
+        </h3>
+        <p className="mt-3 text-xs text-white/60">With {project.company}</p>
+      </div>
+    </article>
   );
 }

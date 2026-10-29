@@ -1,173 +1,139 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { Mail, Phone } from "lucide-react";
-import { useInView } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
 
-function AnimatedCounter({
-  end,
-  suffix,
-  label,
-}: {
-  end: number;
-  suffix: string;
-  label: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    let frame = 0;
-    const totalFrames = 60;
-    const timer = setInterval(() => {
-      frame++;
-      setCount(Math.floor((frame / totalFrames) * end));
-      if (frame >= totalFrames) {
-        setCount(end);
-        clearInterval(timer);
-      }
-    }, 1500 / totalFrames);
-    return () => clearInterval(timer);
-  }, [isInView, end]);
-
-  return (
-    <div ref={ref} className="text-center text-white">
-      <p className="text-4xl lg:text-5xl font-extrabold mb-2 tabular-nums">
-        {count}
-        {suffix}
-      </p>
-      <p className="text-sm opacity-80 leading-snug">{label}</p>
-    </div>
-  );
-}
+// Every figure here is verifiable: founder experience, the directors' listed
+// projects, the company's service lines, and its ownership.
+const facts = [
+  { value: "30+", label: "Years of hands-on field experience in our founding team" },
+  { value: "6", label: "Major projects in our directors' personal track record" },
+  { value: "4", label: "Core service lines, from civil works to project management" },
+  { value: "100%", label: "Citizen-owned and based in Botswana" },
+];
 
 export default function Hero() {
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
-    >
+    <section id="home" className="relative isolate overflow-hidden bg-ink text-white">
       {/* Background Video */}
-      <div className="absolute inset-0 -z-20 overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/capabilities-background.jpg"
-          aria-hidden="true"
-          className="w-full h-full object-cover"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/capabilities-background.jpg"
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
 
-      {/* Overlay */}
+      {/* Overlays */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(255,140,66,0.25) 100%)",
-        }}
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/40"
       />
+      <div aria-hidden="true" className="blueprint absolute inset-0 -z-10" />
 
-      {/* Content */}
-      <div className="max-w-6xl mx-auto px-5 w-full grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 items-center py-28">
+      <div className="mx-auto grid min-h-[100svh] max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-72 pt-32 lg:grid-cols-12 lg:px-8 lg:pb-56 lg:pt-36">
         {/* Text */}
-        <div className="text-white">
-          {/* Eyebrow */}
-          <p className="text-[#FF8C42] font-semibold tracking-widest uppercase text-sm mb-5">
-            Botswana&apos;s Trusted Construction Partner
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="lg:col-span-8"
+        >
+          <p className="mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+            <span aria-hidden="true" className="h-px w-12 bg-brand" />
+            Construction · Civil Works · Infrastructure
           </p>
 
-          <h1 className="text-5xl lg:text-7xl font-black leading-[1.05] mb-6">
-            Building{" "}
-            <span className="bg-gradient-to-r from-[#FF8C42] to-[#FFD580] bg-clip-text text-transparent">
-              Africa&apos;s
-            </span>
+          <h1 className="display text-[3.6rem] sm:text-8xl lg:text-[8.5rem]">
+            Built on
             <br />
-            Future
+            experience.
+            <br />
+            <span className="text-brand">Ready to build.</span>
           </h1>
 
-          <p className="text-xl leading-relaxed mb-8 text-gray-300 max-w-xl">
-            World-class construction, rehabilitation, and infrastructure
-            solutions that transform communities and drive sustainable
-            development across Botswana.
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/75 sm:text-xl">
+            Vaggex Group is a newly established, citizen-owned construction company
+            in Botswana — founded by professionals who have spent more than three
+            decades on the country&apos;s water, civil and building projects.
           </p>
 
-          {/* Contact Info Box */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/10">
-            <p className="font-semibold text-sm uppercase tracking-wide mb-4 text-gray-300">
-              Contact Us Directly
-            </p>
-            <a
-              href="mailto:vaggexgroup@gmail.com"
-              className="flex items-center gap-3 mb-3 text-sm text-white/90 hover:text-[#FF8C42] transition-colors"
-            >
-              <Mail size={16} aria-hidden="true" className="shrink-0 text-[#FF8C42]" />
-              vaggexgroup@gmail.com
-            </a>
-            <a
-              href="tel:+26776449256"
-              className="flex items-center gap-3 text-sm text-white/90 hover:text-[#FF8C42] transition-colors"
-            >
-              <Phone size={16} aria-hidden="true" className="shrink-0 text-[#FF8C42]" />
-              +267 76 449 256 / 77814198
-            </a>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <button
               onClick={() => scrollToSection("#contact")}
-              className="brand-gradient px-8 py-4 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
-              style={{ boxShadow: "0 4px 20px rgba(255,140,66,0.45)" }}
+              className="group flex items-center gap-3 bg-brand px-8 py-4 font-bold uppercase tracking-wider text-ink transition-colors hover:bg-white"
             >
-              Get a Free Quote
+              Discuss Your Project
+              <ArrowRight
+                size={18}
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
+              />
             </button>
             <button
-              onClick={() => scrollToSection("#gallery")}
-              className="px-8 py-4 rounded-full font-semibold text-white border border-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:-translate-y-1"
+              onClick={() => scrollToSection("#services")}
+              className="border border-white/30 px-8 py-4 font-bold uppercase tracking-wider text-white transition-colors hover:border-brand hover:text-brand"
             >
-              View Projects
+              Our Services
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Animated Stats */}
-        <div className="flex flex-row lg:flex-col gap-6 justify-center lg:justify-start">
-          {[
-            { end: 30, suffix: "+", label: "Years Combined\nExperience" },
-            { end: 100, suffix: "+", label: "Projects\nCompleted" },
-            { end: 100, suffix: "%", label: "Client\nSatisfaction" },
-          ].map((stat) => (
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+          className="hidden justify-end lg:col-span-4 lg:flex"
+        >
+          <div className="relative">
+            <div aria-hidden="true" className="absolute -bottom-4 -right-4 h-full w-full border-2 border-brand" />
+            <Image
+              src="/vaggex-logo.png"
+              alt="Vaggex Group logo"
+              width={340}
+              height={340}
+              priority
+              className="relative h-auto w-[340px] shadow-2xl"
+            />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Facts band */}
+      <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-ink/80 backdrop-blur-md">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 px-5 lg:grid-cols-4 lg:px-8">
+          {facts.map((fact, i) => (
             <div
-              key={stat.label}
-              className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl px-6 py-5 flex-1 lg:flex-none"
+              key={fact.label}
+              className={`py-5 pr-4 lg:py-7 ${i > 0 ? "lg:border-l lg:border-white/10 lg:pl-8" : ""} ${
+                i % 2 === 1 ? "border-l border-white/10 pl-4 lg:pl-8" : ""
+              } ${i < 2 ? "border-b border-white/10 lg:border-b-0" : ""}`}
             >
-              <AnimatedCounter
-                end={stat.end}
-                suffix={stat.suffix}
-                label={stat.label.replace("\\n", " ")}
-              />
+              <dt className="sr-only">{fact.label}</dt>
+              <dd className="flex flex-col gap-1">
+                <span className="display text-4xl text-brand lg:text-5xl">{fact.value}</span>
+                <span className="text-xs leading-snug text-white/60 lg:text-sm">{fact.label}</span>
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 text-xs"
+      <button
+        onClick={() => scrollToSection("#about")}
+        aria-label="Scroll to company overview"
+        className="absolute bottom-40 right-8 hidden h-12 w-12 items-center justify-center border border-white/20 text-white/70 transition-colors hover:border-brand hover:text-brand lg:bottom-48 lg:flex"
       >
-        <span className="tracking-widest uppercase text-[10px]">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-white/50 to-transparent" />
-      </div>
+        <ArrowDown size={18} aria-hidden="true" />
+      </button>
     </section>
   );
 }

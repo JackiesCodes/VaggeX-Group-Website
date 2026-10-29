@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowRight, Check } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+import { company } from "@/lib/company";
 
 type FormFields = {
   name: string;
@@ -68,7 +70,7 @@ export default function Contact() {
     const body = encodeURIComponent(
       `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\n\n${form.message}`
     );
-    window.location.href = `mailto:vaggexgroup@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${company.email}?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setIsSubmitting(false);
   };
@@ -80,90 +82,109 @@ export default function Contact() {
   };
 
   const fieldClass = (name: keyof FormErrors) =>
-    `w-full px-4 py-3 border-2 rounded-lg text-base transition-colors ${
-      errors[name] ? "border-red-400 bg-red-50" : "border-gray-200"
+    `w-full border-0 border-b-2 bg-transparent px-0 py-3 text-base text-white placeholder:text-white/35 transition-colors ${
+      errors[name] ? "border-red-400" : "border-white/20"
     }`;
 
+  const labelClass = "block text-xs font-semibold uppercase tracking-[0.2em] text-white/60";
+
   return (
-    <section id="contact" className="py-12 bg-gray-100">
-      <div className="max-w-6xl mx-auto px-5">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <div className="flex justify-center mb-6">
-            <div className="brand-gradient w-20 h-20 rounded-full flex items-center justify-center text-white">
-              <Phone size={32} aria-hidden="true" />
-            </div>
-          </div>
-          <h2 className="text-5xl font-extrabold text-gray-800 leading-tight">
-            OUR
-            <br />
-            CONTACT
-          </h2>
-        </div>
+    <section id="contact" className="bg-ink py-24 text-white lg:py-32">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <SectionHeading
+          tone="dark"
+          index="08"
+          eyebrow="Contact"
+          title={
+            <>
+              Let&apos;s talk about
+              <br />
+              <span className="text-brand">your project</span>
+            </>
+          }
+          intro={
+            <p>
+              Tell us what you are planning — a new build, civil works, or
+              maintenance of an existing facility. A director will respond to every
+              enquiry personally.
+            </p>
+          }
+        />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
+        <div className="mt-16 grid grid-cols-1 gap-px bg-white/10 lg:grid-cols-12">
           {/* Contact Info */}
-          <div className="flex flex-col gap-6">
-            {[
-              {
-                icon: <Phone size={24} aria-hidden="true" />,
-                title: "Phone",
-                content: "+267 76 449 256 / 77814198 & 76 345 055",
-              },
-              {
-                icon: <Mail size={24} aria-hidden="true" />,
-                title: "Email",
-                content: "vaggexgroup@gmail.com",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="flex items-center gap-4 bg-white rounded-xl shadow-lg p-5"
-              >
-                <div className="brand-gradient w-[50px] h-[50px] rounded-lg flex items-center justify-center text-white shrink-0">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-1">{item.title}</h4>
-                  <p className="text-gray-600 text-sm">{item.content}</p>
-                </div>
+          <div className="flex flex-col bg-ink-800 p-8 lg:col-span-5 lg:p-12">
+            <dl className="space-y-8">
+              <div>
+                <dt className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                  <Phone size={16} aria-hidden="true" />
+                  Phone
+                </dt>
+                <dd className="space-y-1">
+                  {company.phones.map((p) => (
+                    <a
+                      key={p.tel}
+                      href={`tel:${p.tel}`}
+                      className="block font-display text-2xl font-semibold transition-colors hover:text-brand"
+                    >
+                      {p.display}
+                    </a>
+                  ))}
+                </dd>
               </div>
-            ))}
+              <div>
+                <dt className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                  <Mail size={16} aria-hidden="true" />
+                  Email
+                </dt>
+                <dd>
+                  <a
+                    href={`mailto:${company.email}`}
+                    className="break-all font-display text-2xl font-semibold transition-colors hover:text-brand"
+                  >
+                    {company.email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                  <MapPin size={16} aria-hidden="true" />
+                  Based in
+                </dt>
+                <dd className="font-display text-2xl font-semibold">{company.location}</dd>
+              </div>
+            </dl>
 
-            {/* Tagline */}
-            <div className="text-center py-6">
-              <p className="text-xl font-semibold text-gray-800 italic">
-                &quot;Building Africa&apos;s Future, One Project at a Time.&quot;
-              </p>
-            </div>
+            <p className="display mt-auto border-t border-white/10 pt-10 text-3xl text-white/80">
+              &ldquo;{company.tagline}&rdquo;
+            </p>
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Get In Touch</h3>
+          <div className="bg-ink-800 p-8 lg:col-span-7 lg:p-12">
+            <h3 className="display mb-8 text-4xl">Send an enquiry</h3>
 
             {submitted ? (
-              <div
-                role="status"
-                aria-live="polite"
-                className="text-center py-10"
-              >
-                <div aria-hidden="true" className="text-5xl mb-4 text-green-500">✓</div>
-                <p className="text-gray-700 text-lg font-medium mb-6">
-                  Thank you! Your enquiry email is ready to send.
+              <div role="status" aria-live="polite" className="py-10">
+                <span className="mb-6 flex h-14 w-14 items-center justify-center bg-brand text-ink">
+                  <Check size={28} aria-hidden="true" />
+                </span>
+                <p className="mb-8 text-lg text-white/80">
+                  Thank you. Your email app should now be open with your enquiry ready
+                  to send.
                 </p>
                 <button
                   onClick={handleReset}
-                  className="brand-gradient px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                  className="border border-white/30 px-6 py-3 font-bold uppercase tracking-wider transition-colors hover:border-brand hover:text-brand"
                 >
-                  Send Another Message
+                  Send another message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              <form onSubmit={handleSubmit} className="grid gap-8 sm:grid-cols-2" noValidate>
                 <div>
-                  <label className="block text-gray-800 font-medium mb-2" htmlFor="name">
-                    Name <span aria-hidden="true">*</span>
+                  <label className={labelClass} htmlFor="name">
+                    Name <span aria-hidden="true" className="text-brand">*</span>
                     <span className="sr-only">(required)</span>
                   </label>
                   <input
@@ -180,14 +201,14 @@ export default function Contact() {
                     placeholder="Your full name"
                   />
                   {errors.name && (
-                    <p id="name-error" role="alert" className="text-red-500 text-sm mt-1">
+                    <p id="name-error" role="alert" className="mt-2 text-sm text-red-400">
                       {errors.name}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-gray-800 font-medium mb-2" htmlFor="company">
+                  <label className={labelClass} htmlFor="company">
                     Company
                   </label>
                   <input
@@ -195,14 +216,14 @@ export default function Contact() {
                     type="text"
                     value={form.company}
                     onChange={(e) => handleChange("company", e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors"
-                    placeholder="Your company name"
+                    className="w-full border-0 border-b-2 border-white/20 bg-transparent px-0 py-3 text-base text-white placeholder:text-white/35 transition-colors"
+                    placeholder="Organisation (optional)"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-gray-800 font-medium mb-2" htmlFor="email">
-                    Email <span aria-hidden="true">*</span>
+                <div className="sm:col-span-2">
+                  <label className={labelClass} htmlFor="email">
+                    Email <span aria-hidden="true" className="text-brand">*</span>
                     <span className="sr-only">(required)</span>
                   </label>
                   <input
@@ -216,23 +237,23 @@ export default function Contact() {
                     onChange={(e) => handleChange("email", e.target.value)}
                     onBlur={() => handleBlur("email")}
                     className={fieldClass("email")}
-                    placeholder="your@email.com"
+                    placeholder="you@example.com"
                   />
                   {errors.email && (
-                    <p id="email-error" role="alert" className="text-red-500 text-sm mt-1">
+                    <p id="email-error" role="alert" className="mt-2 text-sm text-red-400">
                       {errors.email}
                     </p>
                   )}
                 </div>
 
-                <div>
-                  <label className="block text-gray-800 font-medium mb-2" htmlFor="message">
-                    Message <span aria-hidden="true">*</span>
+                <div className="sm:col-span-2">
+                  <label className={labelClass} htmlFor="message">
+                    Project details <span aria-hidden="true" className="text-brand">*</span>
                     <span className="sr-only">(required)</span>
                   </label>
                   <textarea
                     id="message"
-                    rows={4}
+                    rows={5}
                     required
                     aria-required="true"
                     aria-invalid={!!errors.message}
@@ -241,22 +262,32 @@ export default function Contact() {
                     onChange={(e) => handleChange("message", e.target.value)}
                     onBlur={() => handleBlur("message")}
                     className={`${fieldClass("message")} resize-none`}
-                    placeholder="Tell us about your project..."
+                    placeholder="Location, scope, timeline…"
                   />
                   {errors.message && (
-                    <p id="message-error" role="alert" className="text-red-500 text-sm mt-1">
+                    <p id="message-error" role="alert" className="mt-2 text-sm text-red-400">
                       {errors.message}
                     </p>
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="brand-gradient w-full py-4 rounded-full font-semibold text-white text-base transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-                >
-                  {isSubmitting ? "Sending…" : "Send Message"}
-                </button>
+                <div className="sm:col-span-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group flex w-full items-center justify-center gap-3 bg-brand py-5 font-bold uppercase tracking-wider text-ink transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-12"
+                  >
+                    {isSubmitting ? "Sending…" : "Send Enquiry"}
+                    <ArrowRight
+                      size={18}
+                      aria-hidden="true"
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </button>
+                  <p className="mt-4 text-xs text-white/40">
+                    Submitting opens your email app with the enquiry pre-filled.
+                  </p>
+                </div>
               </form>
             )}
           </div>

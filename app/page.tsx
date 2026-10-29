@@ -1,13 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import RecentProjects from "@/components/RecentProjects";
+import ServiceTicker from "@/components/ServiceTicker";
 import About from "@/components/About";
-import VisionMission from "@/components/VisionMission";
 import Services from "@/components/Services";
+import RecentProjects from "@/components/RecentProjects";
 import Process from "@/components/Process";
-import Capabilities from "@/components/Capabilities";
 import Leadership from "@/components/Leadership";
-import Testimonials from "@/components/Testimonials";
+import VisionMission from "@/components/VisionMission";
 import WhyUs from "@/components/WhyUs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -18,14 +17,13 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <RecentProjects />
+        <ServiceTicker />
         <About />
-        <VisionMission />
         <Services />
+        <RecentProjects />
         <Process />
-        <Capabilities />
         <Leadership />
-        <Testimonials />
+        <VisionMission />
         <WhyUs />
         <Contact />
       </main>

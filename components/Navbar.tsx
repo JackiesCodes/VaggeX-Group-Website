@@ -2,24 +2,23 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Mail, Phone, ArrowUpRight } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
+import { company } from "@/lib/company";
 
 const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#vision", label: "Purpose" },
+  { href: "#about", label: "Company" },
   { href: "#services", label: "Services" },
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#leadership", label: "Team" },
-  { href: "#gallery", label: "Projects" },
+  { href: "#gallery", label: "Experience" },
+  { href: "#process", label: "Approach" },
+  { href: "#leadership", label: "Leadership" },
   { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("#home");
+  const [activeSection, setActiveSection] = useState("");
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -29,12 +28,13 @@ export default function Navbar() {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 50);
+          setScrolled(window.scrollY > 40);
           ticking = false;
         });
         ticking = true;
       }
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -43,8 +43,7 @@ export default function Navbar() {
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     navLinks.forEach(({ href }) => {
-      const id = href.slice(1);
-      const el = document.getElementById(id);
+      const el = document.getElementById(href.slice(1));
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
@@ -76,16 +75,12 @@ export default function Navbar() {
         return;
       }
       if (e.key !== "Tab") return;
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last?.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first?.focus();
-        }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
       }
     };
 
@@ -100,92 +95,147 @@ export default function Navbar() {
     scrollToSection(href);
   };
 
+  const solid = scrolled || isOpen;
+
   return (
-    <nav
-      aria-label="Main navigation"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/15 backdrop-blur-2xl shadow-lg py-2"
-          : "bg-white/10 backdrop-blur-xl border-b border-white/20 py-4"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-5 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
-          <Image
-            src="/vaggex-logo.png"
-            alt="Vaggex Group Logo"
-            width={40}
-            height={40}
-            priority
-            className="object-contain rounded-lg"
-          />
-          <span className="font-bold text-xl text-gray-800">VAGGEX GROUP</span>
-        </div>
-
-        {/* Desktop Nav */}
-        <ul className="hidden lg:flex list-none gap-2" role="list">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <button
-                onClick={() => handleNavClick(link.href)}
-                aria-current={activeSection === link.href ? "page" : undefined}
-                className={`font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:bg-orange-50 hover:-translate-y-0.5 ${
-                  activeSection === link.href
-                    ? "text-[#FF8C42] bg-orange-50"
-                    : "text-gray-800 hover:text-[#FF8C42]"
-                }`}
-              >
-                {link.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile Toggle */}
-        <button
-          ref={toggleRef}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Close navigation" : "Open navigation"}
-          aria-expanded={isOpen}
-          aria-controls="mobile-menu"
-          className="lg:hidden p-2 rounded-md text-gray-800 hover:bg-black/5 transition-colors"
-        >
-          {isOpen ? (
-            <X size={24} aria-hidden="true" />
-          ) : (
-            <Menu size={24} aria-hidden="true" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* Utility bar */}
       <div
-        id="mobile-menu"
-        ref={menuRef}
-        aria-hidden={!isOpen}
-        className={`lg:hidden bg-white/98 backdrop-blur-sm shadow-lg transition-all duration-300 overflow-hidden ${
-          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        className={`hidden border-b border-white/10 bg-ink text-white/70 transition-all duration-300 md:block ${
+          scrolled ? "h-0 overflow-hidden border-transparent" : "h-10"
         }`}
       >
-        <ul className="list-none py-4" role="list">
-          {navLinks.map((link) => (
-            <li key={link.href} className="mx-4 my-1">
-              <button
-                onClick={() => handleNavClick(link.href)}
-                aria-current={activeSection === link.href ? "page" : undefined}
-                className={`w-full text-left font-medium px-4 py-3 rounded-lg text-lg transition-all duration-300 hover:bg-orange-50 hover:translate-x-2 ${
-                  activeSection === link.href
-                    ? "text-[#FF8C42] bg-orange-50"
-                    : "text-gray-800 hover:text-[#FF8C42]"
-                }`}
-              >
-                {link.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-5 text-xs lg:px-8">
+          <p className="uppercase tracking-[0.2em]">
+            Citizen-owned · Construction · Civil Works · Infrastructure
+          </p>
+          <div className="flex items-center gap-6">
+            <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:text-brand">
+              <Mail size={14} aria-hidden="true" className="text-brand" />
+              {company.email}
+            </a>
+            <a href={`tel:${company.phones[0].tel}`} className="flex items-center gap-2 hover:text-brand">
+              <Phone size={14} aria-hidden="true" className="text-brand" />
+              {company.phones[0].display}
+            </a>
+          </div>
+        </div>
       </div>
-    </nav>
+
+      {/* Main bar */}
+      <nav
+        aria-label="Main navigation"
+        className={`transition-all duration-300 ${
+          solid
+            ? "bg-ink/95 shadow-[0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
+            : "bg-gradient-to-b from-ink/70 to-transparent"
+        }`}
+      >
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-5 transition-all duration-300 lg:px-8 ${
+            scrolled ? "h-16" : "h-20"
+          }`}
+        >
+          {/* Logo */}
+          <button
+            onClick={() => handleNavClick("#home")}
+            className="flex items-center gap-3"
+            aria-label="Vaggex Group — back to top"
+          >
+            <Image
+              src="/vaggex-logo.png"
+              alt=""
+              width={44}
+              height={44}
+              priority
+              className="h-11 w-11"
+            />
+            <span className="flex flex-col text-left leading-none">
+              <span className="font-display text-2xl font-bold uppercase tracking-wide text-white">
+                Vaggex
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.45em] text-brand">
+                Group
+              </span>
+            </span>
+          </button>
+
+          {/* Desktop Nav */}
+          <ul className="hidden items-center gap-1 lg:flex" role="list">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <button
+                  onClick={() => handleNavClick(link.href)}
+                  aria-current={activeSection === link.href ? "true" : undefined}
+                  className={`relative px-4 py-2 text-sm font-semibold uppercase tracking-wider transition-colors ${
+                    activeSection === link.href
+                      ? "text-brand"
+                      : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-4 -bottom-0.5 h-0.5 bg-brand transition-transform duration-300 ${
+                      activeSection === link.href ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <button
+            onClick={() => handleNavClick("#contact")}
+            className="hidden items-center gap-2 bg-brand px-5 py-3 text-sm font-bold uppercase tracking-wider text-ink transition-colors hover:bg-white lg:flex"
+          >
+            Request a Quote
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </button>
+
+          {/* Mobile Toggle */}
+          <button
+            ref={toggleRef}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            className="p-2 text-white lg:hidden"
+          >
+            {isOpen ? <X size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          id="mobile-menu"
+          ref={menuRef}
+          hidden={!isOpen}
+          className="border-t border-white/10 bg-ink lg:hidden"
+        >
+          <ul className="px-5 py-4" role="list">
+            {navLinks.map((link, i) => (
+              <li key={link.href} className="border-b border-white/10 last:border-none">
+                <button
+                  onClick={() => handleNavClick(link.href)}
+                  className="flex w-full items-baseline gap-4 py-4 text-left"
+                >
+                  <span className="font-display text-sm text-brand">0{i + 1}</span>
+                  <span className="display text-3xl text-white">{link.label}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="px-5 pb-6">
+            <button
+              onClick={() => handleNavClick("#contact")}
+              className="w-full bg-brand py-4 font-bold uppercase tracking-wider text-ink"
+            >
+              Request a Quote
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }
